@@ -1,5 +1,6 @@
 .godot/
 .import/
+.idea/
 *.translation
 # export_presets.cfg
 .mono/

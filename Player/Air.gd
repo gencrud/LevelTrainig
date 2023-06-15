@@ -18,7 +18,7 @@ func physics_update(delta: float) -> void:
 	player.velocity.y += player.gravity * delta
 		
 	player.move_and_slide()
-	
+		
 	# приземляемся на то же место
 	if start_position_jump.y <= player.position.y:
 		player.position.y = start_position_jump.y
