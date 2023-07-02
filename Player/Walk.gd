@@ -1,6 +1,8 @@
 # class_name Walk
 extends PlayerState
 
+const ENEMY_PHYSIC_LAYER: int = 3
+
 @export var _animation_player: = NodePath() 
 @onready var animation_player: AnimationPlayer = get_node(_animation_player)
 
@@ -14,20 +16,14 @@ func physics_update(delta: float) -> void:
 		state_machine.transition_to("Air")
 		return"""
 
-	if is_on_tilemap_wall(player):
+	if is_on_border_wall(player):
 		player.position.y = get_border_wall()
 		return
-
-	var direction: Vector2 = player.get_direction()	
-	if direction != Vector2.ZERO:
-		player.velocity = player.velocity.move_toward(direction * player.SPEED, player.SPEED * delta)
-	else:
-		player.velocity = player.velocity.move_toward(Vector2.ZERO, player.SPEED * delta)
 	
-	# player.move_and_slide()
-	var collision: KinematicCollision2D = player.move_and_collide(player.velocity * delta)
-	if collision:
-		player.velocity = player.velocity.slide(collision.get_normal())
+	var direction: Vector2 = player.get_direction()
+		
+	_set_velocity_toward(player, direction, delta)
+	_move_collide_bounce_slide(player, delta)
 			
 	if Input.is_action_just_pressed("ui_accept"):
 		state_machine.transition_to("Air", {do_jump = true})
@@ -35,11 +31,48 @@ func physics_update(delta: float) -> void:
 		state_machine.transition_to("Idle")
 
 
+func _set_velocity_toward(player: Player, direction: Vector2, delta: float) -> void:
+	if direction != Vector2.ZERO:
+		player.velocity = player.velocity.move_toward(direction * player.SPEED, player.SPEED * delta)
+	else:
+		player.velocity = player.velocity.move_toward(Vector2.ZERO, player.SPEED * delta)
+
+
+func _move_collide_bounce_slide(player: Player, delta: float) -> void:
+	var collision: KinematicCollision2D = player.move_and_collide(player.velocity * delta)
+	if collision:
+		var body: = collision.get_collider()
+		if collision.get_collider() is TileMap:
+			# body as TileMap
+			# body.clear()
+			var collision_coords: Vector2 = collision.get_position() - collision.get_normal()
+			collision_coords.y -= player.global_position.y + 180
+
+			var local_coords: Vector2i = body.local_to_map(collision_coords)
+			
+			print(body.get_layer_name(1))
+			print(body.get_cell_tile_data(0, body.get_coords_for_body_rid(collision.get_collider_rid())))
+			print(body.get_cell_tile_data(0, local_coords))
+			# print(body.get_used_cells(0), body.get_used_cells(1) )
+
+			print('local_to_map: ', local_coords, ' = ', collision_coords)
+			print(body, ' = ', collision.get_collider_rid())
+			print(body.get_cell_atlas_coords(1, local_coords), body.get_cell_atlas_coords(1,collision_coords))
+			print()
+			print()
+		
+		if player.get_collision_layer() == ENEMY_PHYSIC_LAYER:
+			player.velocity = player.velocity.bounce(collision.get_normal())
+		else:
+			player.velocity = player.velocity.slide(collision.get_normal())
+
+
 func get_border_wall() -> int:
-	return (get_viewport().get_visible_rect().size.y / 2 ) - 50
+	# TODO: Must have to have into each TileMap game scene
+	return (get_viewport().get_visible_rect().size.y / 2) - 240
 
 
-func is_on_tilemap_wall(player: Player) -> bool:
+func is_on_border_wall(player: Player) -> bool:
 	var pos = player.transform.get_origin()
 	return pos.y < get_border_wall()
 	

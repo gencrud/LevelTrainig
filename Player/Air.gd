@@ -8,7 +8,7 @@ var start_position_jump: Vector2 = Vector2.ZERO
 
 
 func enter(_msg := {}) -> void:	
-	if _msg.has("do_jump"):
+	if _msg.has("do_jump") and _msg["do_jump"]:
 		player.velocity.y = player.JUMP_IMPULSE
 		animation_player.play("Jump")
 		start_position_jump = player.position
@@ -25,3 +25,6 @@ func physics_update(delta: float) -> void:
 		start_position_jump = Vector2.ZERO
 		player.velocity = Vector2.ZERO
 		state_machine.transition_to("Idle")
+		
+	if Input.is_action_just_pressed("beat"):
+		state_machine.transition_to("AirBeat")

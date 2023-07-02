@@ -1,15 +1,17 @@
-[gd_scene load_steps=15 format=3 uid="uid://bssk643bos5tp"]
+[gd_scene load_steps=19 format=3 uid="uid://dlb3ihyitplmw"]
 
-[ext_resource type="Texture2D" uid="uid://cxapix64yywvd" path="res://Player/assets/player.png" id="1_bjng6"]
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_o7n17"]
+[ext_resource type="Texture2D" uid="uid://b3c71h003pk4r" path="res://Player/assets/person.png" id="2_w6m86"]
 [ext_resource type="Script" path="res://Player/StateMachine.gd" id="3_fvocu"]
 [ext_resource type="Script" path="res://Player/Idle.gd" id="4_pckl4"]
 [ext_resource type="Script" path="res://Player/Walk.gd" id="5_cx5qo"]
+[ext_resource type="Script" path="res://Player/IdleBeat.gd" id="5_nw1jl"]
 [ext_resource type="Script" path="res://Player/Run.gd" id="6_i0ww6"]
 [ext_resource type="Script" path="res://Player/Air.gd" id="7_140ou"]
+[ext_resource type="Script" path="res://Player/AirBeat.gd" id="9_ayl2o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7vegr"]
-radius = 14.9936
+radius = 18.7499
 height = 104.0
 
 [sub_resource type="Animation" id="Animation_vt6xt"]
@@ -18,14 +20,14 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.478431, 0.701961, 0.988235, 1), Color(1, 1, 1, 1)]
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1.10957, 1.10957),
+"update": 1,
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_7wnnq"]
@@ -34,14 +36,14 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
+"times": PackedFloat32Array(0, 0.3, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.247059, 0.290196, 1, 1), Color(1, 1, 1, 1)]
+"update": 1,
+"values": [6, 8, 7]
 }
 
 [sub_resource type="Animation" id="Animation_rotdb"]
@@ -57,6 +59,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_j5fbb"]
@@ -81,18 +95,53 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.941176, 0.701961, 0.713726, 1), Color(1, 1, 1, 1)]
+"times": PackedFloat32Array(0, 0.28, 0.56, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_0ejfg"]
+resource_name = "Beat"
+length = 0.4
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0725737, 0.120947, 0.295529, 0.35168),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 10, 9]
+}
+
+[sub_resource type="Animation" id="Animation_lkpvg"]
+resource_name = "AirBeat"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [23]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ojp3k"]
 _data = {
+"AirBeat": SubResource("Animation_lkpvg"),
+"Beat": SubResource("Animation_0ejfg"),
 "Idle": SubResource("Animation_vt6xt"),
 "Jump": SubResource("Animation_7wnnq"),
 "RESET": SubResource("Animation_rotdb"),
@@ -101,17 +150,21 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(0.8, 0.8)
+y_sort_enabled = true
 collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_o7n17")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, 86.25)
+position = Vector2(67.5, 190)
 rotation = -1.57332
 shape = SubResource("CapsuleShape2D_7vegr")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_bjng6")
+texture = ExtResource("2_w6m86")
+centered = false
+hframes = 13
+vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -126,6 +179,10 @@ initial_state = NodePath("Idle")
 script = ExtResource("4_pckl4")
 _animation_player = NodePath("../../AnimationPlayer")
 
+[node name="IdleBeat" type="Node" parent="StateMachine"]
+script = ExtResource("5_nw1jl")
+_animation_player = NodePath("../../AnimationPlayer")
+
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("5_cx5qo")
 _animation_player = NodePath("../../AnimationPlayer")
@@ -138,5 +195,12 @@ _animation_player = NodePath("../../AnimationPlayer")
 script = ExtResource("7_140ou")
 _animation_player = NodePath("../../AnimationPlayer")
 
+[node name="AirBeat" type="Node" parent="StateMachine"]
+script = ExtResource("9_ayl2o")
+_animation_player = NodePath("../../AnimationPlayer")
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(185, -170)
+position = Vector2(427, -8)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true

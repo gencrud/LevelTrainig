@@ -17,7 +17,7 @@ func get_direction() -> Vector2:
 	
 	# Todo: move logic setter direction of fliping
 	$Sprite.flip_h = direction_x < 0
-	$Sprite.flip_v = direction_y > 0
+	#$Sprite.flip_v = direction_y > 0
 		
 	return Vector2(direction_x, direction_y)
 
