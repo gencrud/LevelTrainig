@@ -1,18 +1,66 @@
-[gd_scene load_steps=19 format=3 uid="uid://dlb3ihyitplmw"]
+[gd_scene load_steps=27 format=3 uid="uid://dlb3ihyitplmw"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_o7n17"]
 [ext_resource type="Texture2D" uid="uid://b3c71h003pk4r" path="res://Player/assets/person.png" id="2_w6m86"]
+[ext_resource type="Script" path="res://Player/PlayerBeatArea.gd" id="3_584cs"]
 [ext_resource type="Script" path="res://Player/StateMachine.gd" id="3_fvocu"]
 [ext_resource type="Script" path="res://Player/Idle.gd" id="4_pckl4"]
 [ext_resource type="Script" path="res://Player/Walk.gd" id="5_cx5qo"]
 [ext_resource type="Script" path="res://Player/IdleBeat.gd" id="5_nw1jl"]
 [ext_resource type="Script" path="res://Player/Run.gd" id="6_i0ww6"]
+[ext_resource type="Script" path="res://Player/ComboBeat.gd" id="7_3uj5k"]
 [ext_resource type="Script" path="res://Player/Air.gd" id="7_140ou"]
+[ext_resource type="Script" path="res://Player/ComboBeat2.gd" id="8_w0rp5"]
 [ext_resource type="Script" path="res://Player/AirBeat.gd" id="9_ayl2o"]
+[ext_resource type="Script" path="res://Player/ComboBeat3.gd" id="9_derwf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7vegr"]
 radius = 18.7499
 height = 104.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rbeqy"]
+radius = 8.99999
+height = 108.0
+
+[sub_resource type="Animation" id="Animation_lkpvg"]
+resource_name = "AirBeat"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [10, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BeatArea/CollisionShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BeatArea:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(110, 190), Vector2(110, 190), Vector2(94, 22)]
+}
 
 [sub_resource type="Animation" id="Animation_vt6xt"]
 resource_name = "Idle"
@@ -32,7 +80,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_7wnnq"]
 resource_name = "Jump"
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -40,10 +87,10 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [6, 8, 7]
+"values": [8, 7, 9, 7]
 }
 
 [sub_resource type="Animation" id="Animation_rotdb"]
@@ -71,6 +118,42 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BeatArea/CollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BeatArea:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(94, 22)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite:frame_coords")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(3, 2)]
 }
 
 [sub_resource type="Animation" id="Animation_j5fbb"]
@@ -106,7 +189,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_0ejfg"]
-resource_name = "Beat"
+resource_name = "IdleBeat"
 length = 0.4
 step = 1.0
 tracks/0/type = "value"
@@ -119,11 +202,103 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0725737, 0.120947, 0.295529, 0.35168),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [9, 10, 11, 10, 9]
+"values": [14, 15, 16, 15, 14]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BeatArea/CollisionShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0001, 0.0002, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_lkpvg"]
-resource_name = "AirBeat"
+[sub_resource type="Animation" id="Animation_o37o6"]
+resource_name = "ComboBeat"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2i(3, 2), Vector2i(4, 2), Vector2i(3, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BeatArea:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(110, 40), Vector2(110, 40), Vector2(110, 190)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BeatArea/CollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ws8ne"]
+resource_name = "ComboBeat2"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2i(5, 2), Vector2i(6, 2), Vector2i(5, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BeatArea:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(110, 80), Vector2(110, 80), Vector2(110, 190)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BeatArea/CollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_p1xmp"]
+resource_name = "ComboBeat3"
 length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -132,17 +307,44 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [23]
+"values": [11, 13, 12, 13]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BeatArea:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(110, 80), Vector2(110, 80), Vector2(110, 190)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BeatArea/CollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ojp3k"]
 _data = {
 "AirBeat": SubResource("Animation_lkpvg"),
-"Beat": SubResource("Animation_0ejfg"),
+"ComboBeat": SubResource("Animation_o37o6"),
+"ComboBeat2": SubResource("Animation_ws8ne"),
+"ComboBeat3": SubResource("Animation_p1xmp"),
 "Idle": SubResource("Animation_vt6xt"),
+"IdleBeat": SubResource("Animation_0ejfg"),
 "Jump": SubResource("Animation_7wnnq"),
 "RESET": SubResource("Animation_rotdb"),
 "Run": SubResource("Animation_j5fbb"),
@@ -150,6 +352,8 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+light_mask = 2
+visibility_layer = 5
 y_sort_enabled = true
 collision_layer = 2
 collision_mask = 5
@@ -163,8 +367,21 @@ shape = SubResource("CapsuleShape2D_7vegr")
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_w6m86")
 centered = false
-hframes = 13
+offset = Vector2(-32, 0)
+hframes = 7
 vframes = 3
+frame = 17
+
+[node name="BeatArea" type="Area2D" parent="."]
+position = Vector2(94, 22)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_584cs")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="BeatArea"]
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_rbeqy")
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -181,6 +398,18 @@ _animation_player = NodePath("../../AnimationPlayer")
 
 [node name="IdleBeat" type="Node" parent="StateMachine"]
 script = ExtResource("5_nw1jl")
+_animation_player = NodePath("../../AnimationPlayer")
+
+[node name="ComboBeat" type="Node" parent="StateMachine"]
+script = ExtResource("7_3uj5k")
+_animation_player = NodePath("../../AnimationPlayer")
+
+[node name="ComboBeat2" type="Node" parent="StateMachine"]
+script = ExtResource("8_w0rp5")
+_animation_player = NodePath("../../AnimationPlayer")
+
+[node name="ComboBeat3" type="Node" parent="StateMachine"]
+script = ExtResource("9_derwf")
 _animation_player = NodePath("../../AnimationPlayer")
 
 [node name="Walk" type="Node" parent="StateMachine"]
@@ -204,3 +433,6 @@ position = Vector2(427, -8)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[connection signal="area_entered" from="BeatArea" to="BeatArea" method="_on_area_entered"]
+[connection signal="body_entered" from="BeatArea" to="BeatArea" method="_on_body_entered"]

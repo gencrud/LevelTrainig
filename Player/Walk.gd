@@ -50,6 +50,7 @@ func _move_collide_bounce_slide(player: Player, delta: float) -> void:
 
 			var local_coords: Vector2i = body.local_to_map(collision_coords)
 			
+			"""
 			print(body.get_layer_name(1))
 			print(body.get_cell_tile_data(0, body.get_coords_for_body_rid(collision.get_collider_rid())))
 			print(body.get_cell_tile_data(0, local_coords))
@@ -58,9 +59,8 @@ func _move_collide_bounce_slide(player: Player, delta: float) -> void:
 			print('local_to_map: ', local_coords, ' = ', collision_coords)
 			print(body, ' = ', collision.get_collider_rid())
 			print(body.get_cell_atlas_coords(1, local_coords), body.get_cell_atlas_coords(1,collision_coords))
-			print()
-			print()
-		
+			"""
+			
 		if player.get_collision_layer() == ENEMY_PHYSIC_LAYER:
 			player.velocity = player.velocity.bounce(collision.get_normal())
 		else:
