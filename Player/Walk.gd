@@ -20,13 +20,15 @@ func physics_update(delta: float) -> void:
 		player.position.y = get_border_wall()
 		return
 	
-	var direction: Vector2 = player.get_direction()
+	var direction: Vector2 = player.get_direction(true)
 		
 	_set_velocity_toward(player, direction, delta)
 	_move_collide_bounce_slide(player, delta)
 			
 	if Input.is_action_just_pressed("ui_accept"):
 		state_machine.transition_to("Air", {do_jump = true})
+	elif Input.is_action_just_pressed("beat"):
+		state_machine.transition_to("IdleBeat")
 	elif direction == Vector2.ZERO:
 		state_machine.transition_to("Idle")
 
@@ -36,7 +38,7 @@ func _set_velocity_toward(player: Player, direction: Vector2, delta: float) -> v
 		player.velocity = player.velocity.move_toward(direction * player.SPEED, player.SPEED * delta)
 	else:
 		player.velocity = player.velocity.move_toward(Vector2.ZERO, player.SPEED * delta)
-
+	
 
 func _move_collide_bounce_slide(player: Player, delta: float) -> void:
 	var collision: KinematicCollision2D = player.move_and_collide(player.velocity * delta)

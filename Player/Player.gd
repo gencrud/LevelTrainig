@@ -1,23 +1,29 @@
 class_name Player
 extends CharacterBody2D
 
-const SPEED: float = 240.0
-const JUMP_IMPULSE: float = -500.0
-const ACCELERATION: float = 160.0
-const FRICTION: float = 20.0
+const SPEED: float = 340.0
+const JUMP_IMPULSE: float = -540.0
+
+const FRICTION: float = 8.0
 # const AIR_FRICTION: float = 10.0 # Not using so far
+# const ACCELERATION: float = 180.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+# Can go to next state of combo beat when true 
+var beat_is_collision: bool = false
 
 
-func get_direction() -> Vector2:
+func get_direction(do_flip:bool = false) -> Vector2:
 	var direction_x: = Input.get_axis("ui_left", "ui_right")	
 	var direction_y: = Input.get_axis("ui_up", "ui_down")
 	
-	# Todo: move logic setter direction of fliping
-	$Sprite.flip_h = direction_x < 0
-	#$Sprite.flip_v = direction_y > 0
+	if do_flip:
+		# Todo: move logic setter direction of fliping
+		if not $Sprite.flip_h and direction_x == -1:
+			$Sprite.flip_h = true
+		elif direction_x == 1:
+			$Sprite.flip_h = false
 		
 	return Vector2(direction_x, direction_y)
 

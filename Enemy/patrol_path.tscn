@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3ukh0x8ymluh"]
+
+[sub_resource type="Curve2D" id="Curve2D_kfa2b"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 3.41667, -2, 0, 0, 0, 0, -11.3056, -1.53488)
+}
+point_count = 2
+
+[node name="PatrolPath" type="Path2D"]
+position = Vector2(716, 127)
+scale = Vector2(180, 64.5)
+curve = SubResource("Curve2D_kfa2b")

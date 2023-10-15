@@ -18,3 +18,11 @@ func _ready() -> void:
 	# in a scene other than `Player.tscn`, which would be unintended. This can
 	# help prevent some bugs that are difficult to understand.
 	assert(player != null)
+
+
+func _is_playing_beat(animation_player: AnimationPlayer, _state_name: String) -> bool:
+	return "Beat" in animation_player.current_animation and animation_player.current_animation == _state_name and animation_player.is_playing()
+
+
+func _can_use_next_combo(animation_player: AnimationPlayer, _state_name: String) -> bool:
+	return Input.is_action_just_pressed("beat") and player.beat_is_collision
