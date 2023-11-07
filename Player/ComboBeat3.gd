@@ -10,7 +10,13 @@ var _state_name_next_combo: String = ""
 
 func enter(_msg := {}) -> void:
 	animation_player.play(_state_name)
-	player.get_node("Camera2D").add_trauma(0.4)
+	player.get_node("Camera2D").add_trauma(0.08)
+	
+	if is_instance_valid(player._enemy) and player._enemy is Ball:
+		$"../../Sprite/BeatArea/GPUParticles".emitting = true	
+		player._enemy.health()
+			
+	player._enemy = null
 	
 
 func physics_update(delta: float) -> void:	

@@ -4,17 +4,15 @@ extends PlayerState
 @export var _animation_player: = NodePath() 
 @onready var animation_player: AnimationPlayer = get_node(_animation_player)
 
+var _state_name: String = "Idle"
+var _state_name_next_combo: String = "IdleBeat"
+
 
 func enter(_msg := {}) -> void:
-	animation_player.play("Idle")
+	animation_player.play(_state_name)
 
 
 func physics_update(delta: float) -> void:
-	#print_debug('''TODO: is_on_floor as is_on_flat()
-	#if not player.is_on_floor(): 
-	#	state_machine.transition_to("Air")
-	#	return
-	
 	# сбрасываем скорость при остановке персонажа
 	if not is_zero_approx(player.velocity.x):
 		player.velocity.x = lerp(player.velocity.x, 0.0, player.FRICTION * delta)
@@ -26,7 +24,7 @@ func physics_update(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"): # and player.is_on_flat():
 		state_machine.transition_to("Air", {do_jump = true})
 	elif Input.is_action_just_pressed("beat"):
-		state_machine.transition_to("IdleBeat")
+		state_machine.transition_to(_state_name_next_combo)
 	elif player.is_on_moving():
 		state_machine.transition_to("Walk")
 

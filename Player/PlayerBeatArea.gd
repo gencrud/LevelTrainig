@@ -3,12 +3,12 @@ class_name BeatArea
 
 
 func _on_body_entered(body: Node2D):
-	#print("Beat to body: ", body)
+	print("player body: ", body.name, ' vs ', owner._enemy)
 	if owner is Player:
 		owner.beat_is_collision = true
 		$GPUParticles.emitting = true
-		owner.get_node("Camera2D").add_trauma()
-
+		
+		
 
 func _on_body_exited(body: Node2D):
 	#print("Exit beat to body: ", body)
@@ -17,4 +17,7 @@ func _on_body_exited(body: Node2D):
 		
 
 func _on_area_entered(area: Area2D):
-	print("Beat to area: ", area)
+	if owner is Player:
+		owner._enemy = area.owner
+		print("player area ", area.owner.name, ' vs ...' )
+

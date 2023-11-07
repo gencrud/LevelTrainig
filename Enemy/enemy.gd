@@ -27,9 +27,9 @@ func _physics_process(delta):
 	choose_action()
 	# Changing the x scale flips the sprite and its attack area.
 	if velocity.x > 0:
-		$Sprite2D.scale.x = 1
+		$Sprite2D.flip_h = true
 	elif velocity.x < 0:
-		$Sprite2D.scale.x = -1
+		$Sprite2D.flip_h = false
 		
 
 	# If we're moving, show the run animation.
@@ -52,9 +52,6 @@ func choose_action():
 
 	# Depending on the current state, choose a movement target.
 	var target
-	
-	#print("Enemy state: ", state)
-	
 	match state:
 		states.DEAD:
 			set_physics_process(false)
@@ -79,30 +76,32 @@ func choose_action():
 			velocity = Vector2.ZERO
 			target = player.position
 			if target.x > position.x:
-				$Sprite2D.scale.x = 1
+				$Sprite2D.flip_h = true
 			elif target.x < position.x:
-				$Sprite2D.scale.x = -1
-				
+				$Sprite2D.flip_h = false
+
 			# anim_state.travel("attack")
 
 
 func _on_detect_radius_body_entered(body):
-	print("set states.CHASE", body)
-	state = states.CHASE
 	if body is Player:
+		print("detect entered: CHASE ", body)
+		state = states.CHASE
 		player = body 
 
 func _on_detect_radius_body_exited(body):
-	print("set states.PATROL")
+	print("detect exited: PATROL ", body)
 	state = states.PATROL
 	player = null
 
 
 func _on_attack_radius_body_entered(body):
-	print("set states.ATTACK")
-	state = states.ATTACK
+	if body is Player:
+		print("attack entered: ATTACK ", body)
+		state = states.ATTACK
+		velocity = Vector2.ZERO
 
 
 func _on_attack_radius_body_exited(body):
-	print("set states.CHASE after Attack")
+	print("attack CHASE after Attack", body)
 	state = states.CHASE

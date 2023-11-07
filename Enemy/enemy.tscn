@@ -1,41 +1,41 @@
-[gd_scene load_steps=7 format=3 uid="uid://cj2lh1ydqm7ce"]
+[gd_scene load_steps=6 format=3 uid="uid://cj2lh1ydqm7ce"]
 
-[ext_resource type="Texture2D" uid="uid://cxapix64yywvd" path="res://Player/assets/player.png" id="1_bkrnb"]
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_iu1ww"]
-[ext_resource type="PackedScene" uid="uid://c3ukh0x8ymluh" path="res://Enemy/patrol_path.tscn" id="3_af6by"]
+[ext_resource type="Texture2D" uid="uid://b3c71h003pk4r" path="res://Player/assets/person.png" id="2_xull8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_03155"]
-radius = 47.0
-height = 150.0
+radius = 33.0
+height = 162.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_csr7y"]
-radius = 351.0
-height = 1544.0
+radius = 134.0
+height = 1126.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uv0yw"]
-size = Vector2(402, 144.5)
+size = Vector2(130, 156)
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_iu1ww")
-patrol_path = NodePath("PatrolPath")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_bkrnb")
+modulate = Color(1, 0, 0.0166664, 1)
+texture = ExtResource("2_xull8")
+centered = false
+hframes = 7
+vframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 17)
+position = Vector2(100, 112)
 shape = SubResource("CapsuleShape2D_03155")
-
-[node name="PatrolPath" parent="." instance=ExtResource("3_af6by")]
 
 [node name="DetectRadius" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectRadius"]
-position = Vector2(23, 82)
+position = Vector2(53, 101)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_csr7y")
 
@@ -44,7 +44,7 @@ collision_layer = 4
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRadius"]
-position = Vector2(-10, 16)
+position = Vector2(108, 105)
 shape = SubResource("RectangleShape2D_uv0yw")
 
 [connection signal="body_entered" from="DetectRadius" to="." method="_on_detect_radius_body_entered"]

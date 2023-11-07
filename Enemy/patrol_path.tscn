@@ -2,11 +2,11 @@
 
 [sub_resource type="Curve2D" id="Curve2D_kfa2b"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 3.41667, -2, 0, 0, 0, 0, -11.3056, -1.53488)
+"points": PackedVector2Array(0, 0, 0, 0, -4.43889, -0.0505568, 0, 0, 0, 0, 2.37778, -0.0808909)
 }
 point_count = 2
 
 [node name="PatrolPath" type="Path2D"]
-position = Vector2(716, 127)
-scale = Vector2(180, 64.5)
+position = Vector2(854, 173)
+scale = Vector2(180, -98.8987)
 curve = SubResource("Curve2D_kfa2b")

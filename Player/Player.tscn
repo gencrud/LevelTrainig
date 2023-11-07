@@ -33,7 +33,7 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [10, 9]
@@ -102,18 +102,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite/BeatArea/GPUParticles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_ws8ne"]
 resource_name = "ComboBeat2"
@@ -154,18 +142,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite/BeatArea/GPUParticles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_p1xmp"]
 resource_name = "ComboBeat3"
@@ -205,18 +181,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite/BeatArea/GPUParticles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_vt6xt"]
@@ -353,18 +317,6 @@ tracks/4/keys = {
 "update": 1,
 "values": [Vector2i(3, 2)]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Sprite/BeatArea/GPUParticles:emitting")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_j5fbb"]
 resource_name = "Run"
@@ -442,6 +394,8 @@ script = ExtResource("3_584cs")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Sprite/BeatArea"]
+z_index = 1
+y_sort_enabled = true
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_rbeqy")
 disabled = true
@@ -508,7 +462,6 @@ position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("14_ehmtf")
-target = NodePath("..")
 
 [connection signal="area_entered" from="Sprite/BeatArea" to="Sprite/BeatArea" method="_on_area_entered"]
 [connection signal="body_entered" from="Sprite/BeatArea" to="Sprite/BeatArea" method="_on_body_entered"]
