@@ -2,6 +2,7 @@
 extends PlayerState
 
 const ENEMY_PHYSIC_LAYER: int = 3
+const GAME_OBJECT_PHYSIC_LAYER: int = 4
 
 @export var _animation_player: = NodePath() 
 @onready var animation_player: AnimationPlayer = get_node(_animation_player)

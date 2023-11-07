@@ -20,9 +20,11 @@ func physics_update(delta: float) -> void:
 	elif super._can_use_next_combo(animation_player, _state_name):
 		# print(animation_player.current_animation, ' = ', animation_player.is_playing())
 			
-		if is_instance_valid(player._enemy) and player._enemy is Ball:
+		'''
+		if is_instance_valid(player._enemy) and player._enemy is PunchingBag:
 			$"../../Sprite/BeatArea/GPUParticles".emitting = true	
 			player._enemy.play_bounce_bad()
+		'''
 		
 		state_machine.transition_to(_state_name_next_combo)
 	elif not super._is_playing_beat(animation_player, _state_name):

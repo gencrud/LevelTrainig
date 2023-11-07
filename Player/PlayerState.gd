@@ -25,4 +25,4 @@ func _is_playing_beat(animation_player: AnimationPlayer, _state_name: String) ->
 
 
 func _can_use_next_combo(animation_player: AnimationPlayer, _state_name: String) -> bool:
-	return Input.is_action_just_pressed("beat") and player.beat_is_collision
+	return Input.is_action_just_pressed("beat") and player.beat_is_collision and animation_player.current_animation != 'Damage'

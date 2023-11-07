@@ -8,7 +8,7 @@ extends PlayerState
 		
 func enter(_msg := {}) -> void:
 	animation_player.play("AirBeat")
-	player.get_node("Camera2D").add_trauma()
+	# player.get_node("Camera2D").add_trauma()
 	
 
 func physics_update(delta: float) -> void:

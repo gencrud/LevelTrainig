@@ -13,6 +13,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 # Can go to next state of combo beat when true 
 var beat_is_collision: bool = false
 var _enemy: Node2D
+var lifes = 100
 
 
 func get_direction(do_flip:bool = false) -> Vector2:

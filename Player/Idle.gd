@@ -23,7 +23,7 @@ func physics_update(delta: float) -> void:
 
 	if Input.is_action_just_pressed("ui_accept"): # and player.is_on_flat():
 		state_machine.transition_to("Air", {do_jump = true})
-	elif Input.is_action_just_pressed("beat"):
+	elif Input.is_action_just_pressed("beat") and animation_player.current_animation != 'Damage':
 		state_machine.transition_to(_state_name_next_combo)
 	elif player.is_on_moving():
 		state_machine.transition_to("Walk")

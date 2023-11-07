@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dlb3ihyitplmw"]
+[gd_scene load_steps=29 format=3 uid="uid://dlb3ihyitplmw"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_o7n17"]
 [ext_resource type="Texture2D" uid="uid://b3c71h003pk4r" path="res://Player/assets/person.png" id="2_w6m86"]
@@ -16,8 +16,8 @@
 [ext_resource type="Script" path="res://Player/Camera2D.gd" id="14_ehmtf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7vegr"]
-radius = 18.7499
-height = 104.0
+radius = 13.9899
+height = 139.984
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rbeqy"]
 radius = 8.99999
@@ -92,7 +92,7 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("Sprite/BeatArea/CollisionShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
@@ -132,7 +132,7 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("Sprite/BeatArea/CollisionShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
@@ -172,7 +172,7 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("Sprite/BeatArea/CollisionShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
@@ -181,6 +181,22 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_w1i4o"]
+resource_name = "Damage"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.694118, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_vt6xt"]
@@ -198,10 +214,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0640032),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_0ejfg"]
 resource_name = "IdleBeat"
-length = 0.4
+length = 0.5
 step = 1.0
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -288,10 +316,10 @@ tracks/2/path = NodePath("Sprite/BeatArea/CollisionShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.00190879),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true]
+"values": [true, false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -316,6 +344,30 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2i(3, 2)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CollisionShape:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_j5fbb"]
@@ -356,6 +408,7 @@ _data = {
 "ComboBeat": SubResource("Animation_o37o6"),
 "ComboBeat2": SubResource("Animation_ws8ne"),
 "ComboBeat3": SubResource("Animation_p1xmp"),
+"Damage": SubResource("Animation_w1i4o"),
 "Idle": SubResource("Animation_vt6xt"),
 "IdleBeat": SubResource("Animation_0ejfg"),
 "Jump": SubResource("Animation_7wnnq"),
@@ -366,19 +419,18 @@ _data = {
 
 [node name="Player" type="CharacterBody2D"]
 light_mask = 2
-visibility_layer = 5
-y_sort_enabled = true
 collision_layer = 2
-collision_mask = 5
+collision_mask = 13
 slide_on_ceiling = false
 script = ExtResource("1_o7n17")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(67.5, 190)
+position = Vector2(60, 188)
 rotation = -1.57332
 shape = SubResource("CapsuleShape2D_7vegr")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.9, 0.9)
 texture = ExtResource("2_w6m86")
 centered = false
 offset = Vector2(-32, 0)
@@ -389,19 +441,18 @@ frame = 17
 [node name="BeatArea" type="Area2D" parent="Sprite"]
 position = Vector2(94, 22)
 collision_layer = 2
-collision_mask = 5
+collision_mask = 13
 script = ExtResource("3_584cs")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Sprite/BeatArea"]
-z_index = 1
-y_sort_enabled = true
+position = Vector2(10.4445, 11.3333)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_rbeqy")
 disabled = true
 
 [node name="GPUParticles" type="CPUParticles2D" parent="Sprite/BeatArea"]
-position = Vector2(50, 20)
+position = Vector2(52.6667, 25.7778)
 emitting = false
 amount = 12
 lifetime = 0.1
