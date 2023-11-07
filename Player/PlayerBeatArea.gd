@@ -3,7 +3,7 @@ class_name BeatArea
 
 
 func _on_body_entered(body: Node2D):
-	print("player body: ", body.name, ' vs ', owner._enemy)
+	print("player body: ", body.name, ' vs ', owner)
 	if owner is Player:
 		owner.beat_is_collision = true
 		$GPUParticles.emitting = true
@@ -18,10 +18,12 @@ func _on_body_exited(body: Node2D):
 
 func _on_area_entered(area: Area2D):
 	if owner is Player:
-		owner._enemy = area.owner
+		pass
+		#owner._enemy = area.owner
 				
-		print("player area ", area.owner.name, ' vs ...')
+		# todo:print("player area ", area.owner.name, ' vs ...')
 		
+		'''
 		if owner._enemy is Enemy: # and owner.get_node("AnimationPlayer").current_animation != 'Damage':
 			var player_animation_player: AnimationPlayer = owner.get_node('AnimationPlayer')
 			if 'Damage' in [player_animation_player.current_animation, owner._enemy.animation_player]:
@@ -37,4 +39,4 @@ func _on_area_entered(area: Area2D):
 				await get_tree().create_timer(0.6).timeout
 				if is_instance_valid(owner._enemy):
 					owner._enemy.queue_free()
-				
+				'''

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://csg76gecdap8d"]
+[gd_scene load_steps=13 format=3 uid="uid://csg76gecdap8d"]
 
 [ext_resource type="Script" path="res://Ball/punching_bag.gd" id="1_2wssg"]
 [ext_resource type="Texture2D" uid="uid://ccx2bokxbuhrq" path="res://Ball/assets/box-ball.webp" id="1_svcgm"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Player/StateMachine.gd" id="4_3g6dx"]
 [ext_resource type="Script" path="res://Ball/Idle.gd" id="5_2b6ar"]
 [ext_resource type="Script" path="res://Ball/Damage.gd" id="6_a17ue"]
+[ext_resource type="Script" path="res://Ball/Die.gd" id="7_kcfl3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_66h1j"]
 radius = 23.0
@@ -190,4 +191,8 @@ _animation_player = NodePath("../../AnimationPlayer")
 script = ExtResource("6_a17ue")
 _animation_player = NodePath("../../AnimationPlayer")
 
+[node name="Die" type="Node" parent="StateMachine"]
+script = ExtResource("7_kcfl3")
+
 [connection signal="area_entered" from="BeatArea" to="." method="_on_beat_area_area_entered"]
+[connection signal="body_entered" from="BeatArea" to="." method="_on_beat_area_body_entered"]

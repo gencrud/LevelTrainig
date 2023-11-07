@@ -4,9 +4,19 @@ extends PunchingBagState
 @export var _animation_player: = NodePath() 
 @onready var animation_player: AnimationPlayer = get_node(_animation_player)
 
-var _state_name: String = "Damage"
+const STATE_NAME: String = "Damage"
 
 
 func enter(_msg := {}) -> void:
-	if not animation_player.is_playing():
-		animation_player.play(_state_name)
+	animation_player.play(STATE_NAME)
+	owner.position.x += owner.REBOUND_AFTER_IMPACT
+	
+	if owner.life_label_3.visible:
+		state_machine.transition_to('Die')
+		
+	elif owner.life_label_2.visible:
+		owner.life_label_3.visible = true
+	elif owner.life_label_1.visible:
+		owner.life_label_2.visible = true
+	else:
+		owner.life_label_1.visible = true

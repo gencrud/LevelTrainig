@@ -1,15 +1,15 @@
 # class_name Idle
 extends PlayerState
 
+const STATE_NAME: String = "Idle"
+const STATE_NAME_NEXT: String = "IdleBeat"
+
 @export var _animation_player: = NodePath() 
 @onready var animation_player: AnimationPlayer = get_node(_animation_player)
 
-var _state_name: String = "Idle"
-var _state_name_next_combo: String = "IdleBeat"
-
 
 func enter(_msg := {}) -> void:
-	animation_player.play(_state_name)
+	animation_player.play(STATE_NAME)
 
 
 func physics_update(delta: float) -> void:
@@ -24,7 +24,7 @@ func physics_update(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"): # and player.is_on_flat():
 		state_machine.transition_to("Air", {do_jump = true})
 	elif Input.is_action_just_pressed("beat") and animation_player.current_animation != 'Damage':
-		state_machine.transition_to(_state_name_next_combo)
+		state_machine.transition_to(STATE_NAME_NEXT)
 	elif player.is_on_moving():
 		state_machine.transition_to("Walk")
 

@@ -6,4 +6,6 @@ extends PunchingBagState
 
 
 func enter(_msg := {}) -> void:
-	pass
+	owner.life_label_1.visible = false
+	owner.life_label_2.visible = false
+	owner.life_label_3.visible = false

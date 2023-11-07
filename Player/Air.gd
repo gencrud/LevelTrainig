@@ -1,6 +1,8 @@
 # class_name Air
 extends PlayerState
 
+const STATE_NAME: String = 'Jump'
+
 @export var _animation_player: = NodePath() 
 @onready var animation_player: AnimationPlayer = get_node(_animation_player)
 
@@ -10,13 +12,12 @@ var start_position_jump: Vector2 = Vector2.ZERO
 func enter(_msg := {}) -> void:	
 	if _msg.has("do_jump") and _msg["do_jump"]:
 		player.velocity.y = player.JUMP_IMPULSE
-		animation_player.play("Jump")
+		animation_player.play(STATE_NAME)
 		start_position_jump = player.position
 
 
 func physics_update(delta: float) -> void:
 	player.velocity.y += player.gravity * delta
-		
 	player.move_and_slide()
 		
 	# приземляемся на то же место

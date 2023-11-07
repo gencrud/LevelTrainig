@@ -1,27 +1,21 @@
 class_name ComboBeat3
 extends PlayerState
 
+const STATE_NAME: String = "ComboBeat3"
+const STATE_NAME_NEXT: String = ""
+
 @export var _animation_player: = NodePath() 
 @onready var animation_player: AnimationPlayer = get_node(_animation_player)
 
-var _state_name: String = "ComboBeat3"
-var _state_name_next_combo: String = ""
-
 
 func enter(_msg := {}) -> void:
-	animation_player.play(_state_name)
-
-	if is_instance_valid(player._enemy) and player._enemy is PunchingBag:
-		$"../../Sprite/BeatArea/GPUParticles".emitting = true	
-		player._enemy.play_bounce_bad()
-		player._enemy.die()
-	
-	player.get_node("Camera2D").add_trauma(0.08)		
-	player._enemy = null
+	animation_player.play(STATE_NAME)
+	player.get_node("Camera2D").add_trauma(0.08)
+	# player._enemy = null
 	
 
 func physics_update(delta: float) -> void:	
 	if Input.is_action_just_pressed("ui_accept"):
 		state_machine.transition_to("Air", {do_jump = true})
-	elif not super._is_playing_beat(animation_player, _state_name):
+	elif not super._is_playing_beat(animation_player, STATE_NAME):
 		state_machine.transition_to("Idle")
