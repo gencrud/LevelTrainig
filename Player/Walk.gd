@@ -13,15 +13,11 @@ func enter(_msg := {}) -> void:
 	
 
 func physics_update(delta: float) -> void:
-	"""if not player.is_on_floor():
-		state_machine.transition_to("Air")
-		return"""
-
 	if is_on_border_wall(player):
 		player.position.y = get_border_wall()
 		return
 	
-	var direction: Vector2 = player.get_direction(true)
+	var direction: Vector2 = player.get_direction()
 		
 	_set_velocity_toward(player, direction, delta)
 	_move_collide_bounce_slide(player, delta)

@@ -20,4 +20,5 @@ func physics_update(delta: float) -> void:
 		await animation_player.animation_finished
 		state_machine.transition_to(STATE_NAME_NEXT)
 	elif not super._is_playing_beat(animation_player, STATE_NAME):
+		print('Can not do full combo ')
 		state_machine.transition_to("Idle")

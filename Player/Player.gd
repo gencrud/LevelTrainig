@@ -12,22 +12,11 @@ const FRICTION: float = 8.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 # Can go to next state of combo beat when true 
 var beat_is_collision: bool = false
-# var _enemy: Node2D
 var lifes = 100
 
 
-func get_direction(do_flip:bool = false) -> Vector2:
-	var direction_x: = Input.get_axis("ui_left", "ui_right")	
-	var direction_y: = Input.get_axis("ui_up", "ui_down")
-	
-	if do_flip:
-		# Todo: move logic setter direction of fliping
-		if not $Sprite.flip_h and direction_x == -1:
-			$Sprite.flip_h = true
-		elif direction_x == 1:
-			$Sprite.flip_h = false
-		
-	return Vector2(direction_x, direction_y)
+func get_direction() -> Vector2:
+	return Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down"))
 
 
 func is_on_moving() -> bool:

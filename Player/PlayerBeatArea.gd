@@ -1,9 +1,9 @@
 extends Area2D
-class_name BeatArea
+class_name AttackArea
 
 
 func _on_body_entered(body: Node2D):
-	print("player body: ", body.name, ' vs ', owner)
+	print("player body: ", body.name, ' vs ', owner.name)
 	if owner is Player:
 		owner.beat_is_collision = true
 		$GPUParticles.emitting = true
@@ -14,8 +14,9 @@ func _on_body_exited(body: Node2D):
 	#print("Exit beat to body: ", body)
 	if owner is Player:
 		owner.beat_is_collision = false
+	
 		
-
+'''
 func _on_area_entered(area: Area2D):
 	if owner is Player:
 		pass
@@ -23,7 +24,7 @@ func _on_area_entered(area: Area2D):
 				
 		# todo:print("player area ", area.owner.name, ' vs ...')
 		
-		'''
+
 		if owner._enemy is Enemy: # and owner.get_node("AnimationPlayer").current_animation != 'Damage':
 			var player_animation_player: AnimationPlayer = owner.get_node('AnimationPlayer')
 			if 'Damage' in [player_animation_player.current_animation, owner._enemy.animation_player]:

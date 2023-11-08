@@ -7,13 +7,14 @@ extends PunchingBagState
 const STATE_NAME: String = "Damage"
 
 
-func enter(_msg := {}) -> void:
+func enter(msg := {}) -> void:
 	animation_player.play(STATE_NAME)
-	owner.position.x += owner.REBOUND_AFTER_IMPACT
+
+	if msg.player:
+		owner.position.x += owner.REBOUND_AFTER_IMPACT * msg.player.transform.x[0]
 	
 	if owner.life_label_3.visible:
-		state_machine.transition_to('Die')
-		
+		state_machine.transition_to('Die', {player = msg.player})
 	elif owner.life_label_2.visible:
 		owner.life_label_3.visible = true
 	elif owner.life_label_1.visible:
