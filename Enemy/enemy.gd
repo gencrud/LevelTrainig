@@ -2,11 +2,10 @@ extends CharacterBody2D
 class_name Enemy
 
 enum states {PATROL, CHASE, ATTACK, DEAD}
-var state = states.PATROL
+# var state = states.PATROL
 var lifes = 100
 
 # For setting animations.
-var anim_state
 var run_speed = 50
 var attacks: Array = ["Attack_1", "Attack_2",  "Attack_3"]
 
@@ -24,34 +23,21 @@ var player: Player = null
 func _ready():
 	if patrol_path:
 		patrol_points = get_node(patrol_path).curve.get_baked_points()
+	
 		
-		
+"""	
 func _physics_process(delta):
 	choose_action()
-
-	# Changing the x scale flips the sprite and its attack area.
-	if velocity.x > 0:
-		$Sprite2D.flip_h = true
-	elif velocity.x < 0:
-		$Sprite2D.flip_h = false
-
-	# If we're moving, show the run animation.
-	# if velocity.length() > 0:
-	# 	anim_state.travel("run")
-	# Show the idle animation when coming to a stop (but not attacking).
-	#if anim_state.get_current_node() == "run" and velocity.length() == 0:
-	#	anim_state.travel("idle")
-
 	move_and_slide()
-	
 
 func choose_action():
+	if state == 0: return
+	print("S: ", state, '; A: ', animation_player.current_animation)
+	
 	# velocity = Vector2.ZERO
-	# var current = anim_state.get_current_node()
 	# If we're currently attacking, don't move or change state.
-
-	#if current in attacks: 
-	#	return
+	if animation_player.current_animation in attacks: 
+		return
 
 	# Depending on the current state, choose a movement target.
 	var target
@@ -70,21 +56,21 @@ func choose_action():
 			animation_player.play("Walk")
 			
 		# Move towards player.
-		states.CHASE:
-			target = player.position
-			velocity = (target - position).normalized() * run_speed
-			animation_player.play("Walk")
+		#states.CHASE:
+		#	target = player.position
+		#	velocity = (target - position).normalized() * run_speed
+		#	animation_player.play("Walk")
+	
 
 		# Make an attack.
-		states.ATTACK:
-			velocity = Vector2.ZERO
-			target = player.position
-			
-			if target.x > position.x:
-				$Sprite2D.flip_h = true
-			elif target.x < position.x:
-				$Sprite2D.flip_h = false
-			
+		#states.ATTACK:
+		#	velocity = Vector2.ZERO
+		#	target = player.position
+						
+			# var rand_attack = attacks[randi() % attacks.size()]	
+		#	animation_player.play('Attack_1')
+
+			'''
 			var player_animation_player: AnimationPlayer = player.get_node('AnimationPlayer')
 			if 'Damage' in [player_animation_player.current_animation, animation_player.current_animation]:
 				return
@@ -103,36 +89,33 @@ func choose_action():
 				player.lifes -= 10
 				player_animation_player.play('Damage')
 				print('2 : ', player.lifes)
-			
+			'''
 			# anim_state.travel("attack")
+"""
 
 
-func _on_detect_radius_body_entered(body):
+func _on_detect_radius_body_entered(body: Node2D):
 	if body is Player:
-		print("detect entered: CHASE ", body)
-		state = states.CHASE
-		player = body 
+		$StateMachine.state.state_machine.transition_to('Chase', {player=body})
 
 
-func _on_detect_radius_body_exited(body):
-	print("detect exited: PATROL ", body)
-	state = states.PATROL
-	player = null
+func _on_detect_radius_body_exited(body: Node2D):
+	print('DETECT EXITED ', body.name)
+	if body is Player:
+		$StateMachine.state.state_machine.transition_to('Idle')
 
 
 func _on_attack_radius_body_entered(body: Node2D):
 	if body is Player:
-		print("attack entered: ATTACK ", body.get_node("AnimationPlayer").current_animation, ' ', animation_player.current_animation)
-		state = states.ATTACK
-		velocity = Vector2.ZERO
-
-
-func _on_attack_radius_body_exited(body):
-	print("attack CHASE after Attack, L: ", body.lifes)
-
-	if body is Player:
-		state = states.CHASE
+		$StateMachine.state.state_machine.transition_to('Attack_1', {player=body})
 		
+
+func _on_attack_radius_body_exited(body: Node2D):
+	print('ATTACK EXITED ', body.name)
+	if body is Player:
+		$StateMachine.state.state_machine.transition_to('Chase', {player=body})
+		
+		# todo: BAAAD
 		if body.lifes <= 0:
 			body.position.x -= 300
 			body.modulate.a = 0.2

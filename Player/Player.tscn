@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dlb3ihyitplmw"]
+[gd_scene load_steps=31 format=3 uid="uid://dlb3ihyitplmw"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_o7n17"]
 [ext_resource type="Texture2D" uid="uid://b3c71h003pk4r" path="res://Player/assets/person.png" id="2_w6m86"]
@@ -16,8 +16,8 @@
 [ext_resource type="Script" path="res://Player/Camera2D.gd" id="14_ehmtf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7vegr"]
-radius = 26.9923
-height = 62.0099
+radius = 24.9949
+height = 91.9947
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rbeqy"]
 radius = 8.99999
@@ -25,7 +25,7 @@ height = 108.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3laui"]
 radius = 17.0
-height = 150.0
+height = 138.0
 
 [sub_resource type="Animation" id="Animation_lkpvg"]
 resource_name = "AirBeat"
@@ -197,7 +197,7 @@ tracks/0/path = NodePath("Sprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.228279, 0.5),
+"times": PackedFloat32Array(0, 0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(0.694118, 0, 0, 1), Color(1, 1, 1, 1)]
@@ -213,6 +213,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [8, 17, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackArea/CollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_vt6xt"]
@@ -373,18 +385,6 @@ tracks/6/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath(".:modulate")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.941176, 0, 0.941176, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_j5fbb"]
 resource_name = "Run"
@@ -418,6 +418,33 @@ tracks/0/keys = {
 "values": [2, 3, 4, 5]
 }
 
+[sub_resource type="Animation" id="Animation_sm6ab"]
+resource_name = "Turn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [11, 9, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.321569, 0.4, 0.301961), Color(1, 1, 1, 1), Color(1, 0, 0, 0.376471), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ojp3k"]
 _data = {
 "AirBeat": SubResource("Animation_lkpvg"),
@@ -430,20 +457,20 @@ _data = {
 "Jump": SubResource("Animation_7wnnq"),
 "RESET": SubResource("Animation_rotdb"),
 "Run": SubResource("Animation_j5fbb"),
+"Turn": SubResource("Animation_sm6ab"),
 "Walk": SubResource("Animation_5jh2h")
 }
 
 [node name="Player" type="CharacterBody2D"]
-modulate = Color(0.941176, 0, 0.941176, 1)
-self_modulate = Color(0.635294, 0.00392157, 0.47451, 1)
 light_mask = 2
+position = Vector2(-20, -20)
 collision_layer = 2
 collision_mask = 13
 slide_on_ceiling = false
 script = ExtResource("1_o7n17")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(65, 177)
+position = Vector2(54, 173)
 rotation = -1.57332
 shape = SubResource("CapsuleShape2D_7vegr")
 
@@ -485,7 +512,7 @@ collision_layer = 2
 collision_mask = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BeatArea"]
-position = Vector2(65, 104)
+position = Vector2(61, 101)
 shape = SubResource("CapsuleShape2D_3laui")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -13,10 +13,8 @@ position = Vector2(184, -184)
 [node name="Player" parent="TileMap2" instance=ExtResource("2_nkdtg")]
 position = Vector2(874, 391)
 
-[node name="Enemy" parent="TileMap2" instance=ExtResource("3_dspsf")]
-position = Vector2(2227, 279)
-rotation = 3.14159
-scale = Vector2(1, -1)
-
 [node name="PunchingBag" parent="TileMap2" instance=ExtResource("4_h15v5")]
 position = Vector2(1032, 382)
+
+[node name="Enemy" parent="." instance=ExtResource("3_dspsf")]
+position = Vector2(1626, 376)

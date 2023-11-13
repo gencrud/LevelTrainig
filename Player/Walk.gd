@@ -41,15 +41,23 @@ func _move_collide_bounce_slide(player: Player, delta: float) -> void:
 	var collision: KinematicCollision2D = player.move_and_collide(player.velocity * delta)
 	if collision:
 		var body: = collision.get_collider()
+					
+		#if player.get_collision_layer() == ENEMY_PHYSIC_LAYER:
+		#	player.velocity = player.velocity.bounce(collision.get_normal())
+		#else:
+		
+		player.velocity = player.velocity.slide(collision.get_normal())
+		
+		"""
+		-- TileMap Definition
 		if collision.get_collider() is TileMap:
 			# body as TileMap
 			# body.clear()
 			var collision_coords: Vector2 = collision.get_position() - collision.get_normal()
 			collision_coords.y -= player.global_position.y + 180
-
+			
 			var local_coords: Vector2i = body.local_to_map(collision_coords)
 			
-			"""
 			print(body.get_layer_name(1))
 			print(body.get_cell_tile_data(0, body.get_coords_for_body_rid(collision.get_collider_rid())))
 			print(body.get_cell_tile_data(0, local_coords))
@@ -59,11 +67,7 @@ func _move_collide_bounce_slide(player: Player, delta: float) -> void:
 			print(body, ' = ', collision.get_collider_rid())
 			print(body.get_cell_atlas_coords(1, local_coords), body.get_cell_atlas_coords(1,collision_coords))
 			"""
-			
-		if player.get_collision_layer() == ENEMY_PHYSIC_LAYER:
-			player.velocity = player.velocity.bounce(collision.get_normal())
-		else:
-			player.velocity = player.velocity.slide(collision.get_normal())
+
 
 
 func get_border_wall() -> int:

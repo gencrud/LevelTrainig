@@ -3,7 +3,7 @@ class_name AttackArea
 
 
 func _on_body_entered(body: Node2D):
-	print("player body: ", body.name, ' vs ', owner.name)
+	print("Enterd: ", body.name, ' vs ', owner.name)
 	if owner is Player:
 		owner.beat_is_collision = true
 		$GPUParticles.emitting = true
@@ -11,7 +11,7 @@ func _on_body_entered(body: Node2D):
 		
 
 func _on_body_exited(body: Node2D):
-	#print("Exit beat to body: ", body)
+	print("Exited : ", body.name, ' vs ', owner.name)
 	if owner is Player:
 		owner.beat_is_collision = false
 	
