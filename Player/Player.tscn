@@ -402,22 +402,6 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 0.945098, 0, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_5jh2h"]
-resource_name = "Walk"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.28, 0.56, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [2, 3, 4, 5]
-}
-
 [sub_resource type="Animation" id="Animation_sm6ab"]
 resource_name = "Turn"
 tracks/0/type = "value"
@@ -443,6 +427,22 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 0.321569, 0.4, 0.301961), Color(1, 1, 1, 1), Color(1, 0, 0, 0.376471), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5jh2h"]
+resource_name = "Walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.28, 0.56, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 4, 5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ojp3k"]
@@ -475,7 +475,7 @@ rotation = -1.57332
 shape = SubResource("CapsuleShape2D_7vegr")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(0.9, 0.9)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("2_w6m86")
 centered = false
 offset = Vector2(-32, 0)
@@ -561,7 +561,7 @@ script = ExtResource("9_ayl2o")
 _animation_player = NodePath("../../AnimationPlayer")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(427, -8)
+position = Vector2(344, 17)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true

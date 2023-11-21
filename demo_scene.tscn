@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwcugps7jejak"]
+[gd_scene load_steps=3 format=3 uid="uid://dwcugps7jejak"]
 
 [ext_resource type="PackedScene" uid="uid://cy41fimhhpvto" path="res://tile_map_2.tscn" id="1_0lfyy"]
 [ext_resource type="PackedScene" uid="uid://dlb3ihyitplmw" path="res://Player/Player.tscn" id="2_nkdtg"]
-[ext_resource type="PackedScene" uid="uid://cj2lh1ydqm7ce" path="res://Enemy/enemy.tscn" id="3_dspsf"]
-[ext_resource type="PackedScene" uid="uid://csg76gecdap8d" path="res://Ball/punching_bag.tscn" id="4_h15v5"]
 
 [node name="DemoScene" type="Node2D"]
 position = Vector2(184, -184)
@@ -11,10 +9,4 @@ position = Vector2(184, -184)
 [node name="TileMap2" parent="." instance=ExtResource("1_0lfyy")]
 
 [node name="Player" parent="TileMap2" instance=ExtResource("2_nkdtg")]
-position = Vector2(874, 391)
-
-[node name="PunchingBag" parent="TileMap2" instance=ExtResource("4_h15v5")]
-position = Vector2(1032, 382)
-
-[node name="Enemy" parent="." instance=ExtResource("3_dspsf")]
-position = Vector2(1626, 376)
+position = Vector2(62, 204)
